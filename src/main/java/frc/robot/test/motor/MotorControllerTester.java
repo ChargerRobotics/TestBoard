@@ -2,15 +2,13 @@ package frc.robot.test.motor;
 
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.test.Tester;
 
 import java.util.Map;
 
-public abstract class MotorControllerTester {
-    protected final ShuffleboardTab testerTab;
+public abstract class MotorControllerTester extends Tester {
     protected final GenericEntry motorPowerEntry;
     protected final GenericEntry currentMotorPowerEntry;
     protected final GenericEntry enabledEntry;
@@ -19,7 +17,7 @@ public abstract class MotorControllerTester {
     protected CloseableController<?> currentController;
 
     public MotorControllerTester(String tabName) {
-        testerTab = Shuffleboard.getTab(tabName);
+        super(tabName);
 
         motorPowerEntry = testerTab.add("Motor Power", 0)
                 .withWidget(BuiltInWidgets.kNumberSlider)
@@ -46,6 +44,7 @@ public abstract class MotorControllerTester {
         currentController = createMotorController();
     }
 
+    @Override
     public void periodic() {
         if (!enabledEntry.getBoolean(false)) {
             currentController.getController().stopMotor();

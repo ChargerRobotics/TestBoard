@@ -7,24 +7,28 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import frc.robot.test.Tester;
 import frc.robot.test.motor.CANControllerTester;
-import frc.robot.test.motor.MotorControllerTester;
 import frc.robot.test.motor.PWMControllerTester;
+import frc.robot.test.pneumatics.CompressorTester;
 
 public class Robot extends TimedRobot {
-    private MotorControllerTester pwmControllerTester;
-    private MotorControllerTester canControllerTester;
+    private Tester pwmControllerTester;
+    private Tester canControllerTester;
+    private Tester compressorTester;
 
     @Override
     public void robotInit() {
         pwmControllerTester = new PWMControllerTester();
         canControllerTester = new CANControllerTester();
+        compressorTester = new CompressorTester();
     }
 
     @Override
     public void robotPeriodic() {
         pwmControllerTester.periodic();
         canControllerTester.periodic();
+        compressorTester.periodic();
     }
 
     public static <T extends Enum<T>> void addEnumTo(SendableChooser<T> chooser, T def, Class<T> enumClass) {
